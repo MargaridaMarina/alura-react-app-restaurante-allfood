@@ -10,3 +10,7 @@ $ npm start
 ```
 $ npm i axios
 ```
+### Instalando framework mui (fornece bibliotecas com componentes reaproveitáveis)
+```
+$ npm install @mui/material @emotion/react @emotion/styled
+```
