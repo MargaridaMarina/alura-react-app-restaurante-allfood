@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from "@mui/material"
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import http from "../../../http"
 import ITag from "../../../interfaces/ITag"
@@ -7,6 +7,7 @@ const FormularioPrato = () => {
   
   const [nomePrato, setNomePrato] = useState('')
   const [descricao, setDescricao] = useState('')
+  const [tag, setTag] = useState('')
   
   const [tags, setTags] = useState<ITag[]>([])
   
@@ -30,6 +31,7 @@ const FormularioPrato = () => {
             variant="standard"
             fullWidth
             required
+            margin="dense"
           />
           <TextField 
             value={descricao}
@@ -38,7 +40,21 @@ const FormularioPrato = () => {
             variant="standard"
             fullWidth
             required
+            margin="dense"
           />
+          <FormControl margin="dense" fullWidth>
+            <InputLabel id="select-tag">Tag</InputLabel>
+            <Select 
+              labelId="select-tag"
+              value={tag}
+              onChange={evento=>setTag(evento.target.value)}
+              >
+                {tags.map(tag=>
+                  <MenuItem key={tag.id} value={tag.id}>
+                    {tag.value}
+                  </MenuItem>)}
+            </Select>
+          </FormControl>
           <Button sx={{marginTop:1}} type="submit" fullWidth variant="outlined">
               Salvar
           </Button>
