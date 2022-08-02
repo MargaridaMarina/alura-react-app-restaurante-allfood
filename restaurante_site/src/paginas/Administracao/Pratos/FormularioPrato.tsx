@@ -1,6 +1,7 @@
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import http from "../../../http"
+import IRestaurante from "../../../interfaces/IRestaurante"
 import ITag from "../../../interfaces/ITag"
 
 const FormularioPrato = () => {
@@ -8,12 +9,16 @@ const FormularioPrato = () => {
   const [nomePrato, setNomePrato] = useState('')
   const [descricao, setDescricao] = useState('')
   const [tag, setTag] = useState('')
+  const [restaurante, setRestaurante] = useState('')
   
   const [tags, setTags] = useState<ITag[]>([])
+  const [restaurantes, setRestaurantes] = useState<IRestaurante[]>([])
   
   useEffect(()=>{
     http.get<{tags:ITag[]}>('tags/')
       .then(resposta => setTags(resposta.data.tags))
+    http.get<IRestaurante[]>('restaurantes/')
+      .then(resposta => setRestaurantes(resposta.data))
   }, [])
 
   const aoSubmeterForm = (evento: React.FormEvent<HTMLFormElement>) => {
@@ -52,6 +57,19 @@ const FormularioPrato = () => {
                 {tags.map(tag=>
                   <MenuItem key={tag.id} value={tag.id}>
                     {tag.value}
+                  </MenuItem>)}
+            </Select>
+          </FormControl>
+          <FormControl margin="dense" fullWidth>
+            <InputLabel id="select-restaurante">Restaurante</InputLabel>
+            <Select 
+              labelId="select-restaurante"
+              value={restaurante}
+              onChange={evento=>setRestaurante(evento.target.value)}
+              >
+                {restaurantes.map(restaurante=>
+                  <MenuItem key={restaurante.id} value={restaurante.id}>
+                    {restaurante.nome}
                   </MenuItem>)}
             </Select>
           </FormControl>
