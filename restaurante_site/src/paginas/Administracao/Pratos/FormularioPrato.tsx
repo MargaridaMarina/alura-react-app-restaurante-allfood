@@ -10,6 +10,7 @@ const FormularioPrato = () => {
   const [descricao, setDescricao] = useState('')
   const [tag, setTag] = useState('')
   const [restaurante, setRestaurante] = useState('')
+  const [imagem, setImagem] = useState<File | null>(null)
   
   const [tags, setTags] = useState<ITag[]>([])
   const [restaurantes, setRestaurantes] = useState<IRestaurante[]>([])
@@ -24,6 +25,14 @@ const FormularioPrato = () => {
   const aoSubmeterForm = (evento: React.FormEvent<HTMLFormElement>) => {
     evento.preventDefault()
     }
+
+  const selecionarArquivo = (evento: React.ChangeEvent<HTMLInputElement>) => {
+    if (evento.target.files?.length) {
+      setImagem(evento.target.files[0])
+    } else {
+      setImagem(null)
+    }
+  }
 
   return (
     <Box sx={{display:'flex', flexDirection:"column", alignItems:"center"}}>
@@ -73,6 +82,7 @@ const FormularioPrato = () => {
                   </MenuItem>)}
             </Select>
           </FormControl>
+          <input type="file" onChange={selecionarArquivo}/>          
           <Button sx={{marginTop:1}} type="submit" fullWidth variant="outlined">
               Salvar
           </Button>
